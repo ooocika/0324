@@ -1,0 +1,979 @@
+fun requestFlow (i: Int ) : Flow<String> = flow{
+  emit("$i: First")
+  delay(500)
+  emit("$i: Second")
+
+}
+fun main() = runBlocking<Unit>{
+  val startTime = System.currentTimeMillis()
+  .flatMapLatest{requestFlow(it)}
+  .collect{value -> 
+  println("$value at ${System.currentTimeMIllis() - startTime }ms from start"}
+}
+          }
+          //
+  fun simple() : Flow<Int> = flow{
+    for(i in 1..3){
+      println("Emitting $i")
+      emit(i)
+    }
+  }
+  fun main() = runBlocking<Unit>{
+    try{
+      simple().collect{value ->
+      println(value)
+      check(value <= 1){"Collected $value"}}
+    catch(e: Throwable){
+      println("Caught $e")
+    }}
+  }
+  //
+  fun simple(): Flow<String> = 
+      flow{
+        for(i in 1..3){
+          println("Emitting $i")
+          emit(i)
+        }
+      }
+      .map{value -> 
+      check(value <= 1){"Crashed on $value"}
+      "String $value"
+      }
+      fun main() = runBlocking<Unit>{
+        try{
+          simple().collect{value -> println(value)}
+          
+        }catch(e: Throwable){
+          println("Caught $e")
+        }
+      }
+      //
+      fun simple(): Flow<String> = 
+      flow{
+        for(i in 1..3){
+          println("Emitting $i")
+          emit(i)
+        }
+      }
+      .map{value -> 
+      check(value <= 1){"Crashed on $value"}
+      "String $value"
+      }
+
+      
+      fun main() = runBlocking<Unit>{
+
+        simple()
+        .catch{e -> emit("Caught $e")}
+        .collect{value -> println(value)}
+        
+        }
+      //
+      fun simple(): Flow<Int> = flow{
+        for(i in 1..3){
+          println("Emitting $i")
+          emit(i)
+        }
+      }
+
+      fun main() = runBlocking<Unit>{
+        simple()
+        .catch{e -> println("Caught $e")}
+        check(value <= 1){
+          " Collected $value"
+          println(value)
+        }
+      }
+      //
+      fun simple(): Flow<Int> = flow{
+        for(i in 1..3){
+          println("Emitting $i")
+          emit(i)
+        }
+      }
+      fun main( ) = runBlocking<Unit>{
+        simple()
+        .onEach{value -> 
+        check(value <= 1) {"Collected $value"}
+        println(value)
+        }
+        .catch{e -> println("Caught $e")}
+        .collect()
+      }
+      //
+      fun simple(): Flow<Int> = (1..3)asFlow()
+          
+ fun main() = runBlocking<Unit>{
+   try{
+     simple().collect{value -> println(value)}
+     
+   }finally{
+     println("Done")
+   }
+ }//
+           fun simple(): Flow<Int> = (1..3)asFlow()
+
+           fun main() = runBlocking<Unit>{
+             simple()
+             .onCompletion{println("Done")}
+             .collect{value -> println(value)}
+           }
+           //
+           fun simple(): Flow<Int> = flow{
+             emit(1)
+             throw RuntimeException()
+             
+           }
+           fun main( ) = runBlocking<Unit>{
+             simple()
+             .onCompletion{cause-> it(cause != null) println("Flow completed exceptionally")}
+             .catch{cause -> println("Caught exception")}
+            .collect{value -> println(value)}
+           }
+          
+          //
+            fun simple(): Flow<Int> = (1..3)asFlow()
+
+            fun main() = runBlocking<Unit>{
+              simple()
+              .onCompletion{cause-> println("Flow completed with $cause")}
+                .collect{value -> 
+                  check(value <= 1) {"Collected $value"}
+                  println(value)
+               }
+            }
+            //
+            fun events(): Flow<Int> = (1..3).asFlow().onEach{delay(100)}
+
+            fun main() = runBlocking<Unit>{
+              events()
+              .onEach{event -> println("Event: $event")}
+              .collect()
+              println("Done")
+            
+            }
+            //
+            fun events(): Flow<Int> = (1..3).asFlow().onEach{delay(100)}
+
+            fun main() = runBlocking<Unit>{
+              events()
+              .onEach{event -> println("Event: $event")}
+              .launchIn(this)
+              println("Done")
+
+            }
+            //
+            fun foo(): Flow<Int> = flow{
+              for( i in 1..5){
+                println("Emitting $i")
+                emit(i)
+              }
+            }
+            fun main() = runBlocking<Unit>{
+              foo().collect{value -> 
+              if(value == 3)cancel()
+              
+              println(value)
+              }
+            }
+            //
+            fun main() = runBlocking<Unit>{
+              (1..5).asFlow().collect{value -> 
+              if(value == 3) cancel()
+              println(value)
+              }
+            }
+            //
+            fun main() = runBlocking<Unit>{
+              (1..5).asFlow().cancellable.collect{value -> 
+              if(value == 3) cancel()
+              println(value)
+              }
+            }
+            //
+            fun main() = runBlocking<Unit>{
+              val channel = Channel<Int>()
+              launch{
+                for(x in 1..5)channel.send(x*x)
+                
+              }
+              repeat(5){println(channel.receive())}
+            println("Done!")
+            }
+
+
+
+            
+            //
+            fun main() = runBlocking{
+              val channel = Channel<Int>()
+              launch{
+                for(x in 1..5)channel.send(x*x)
+channel.close()
+              }
+              for(y in channel)println(y)
+              
+             
+            println("Done!")
+            }
+            //
+            fun CoroutineScope.produceSquares(): ReceiveChannel<Int> = produce{
+              for(x in 1..5)send(x*x)
+            }
+
+            fun main() = runBlocking{
+              val squares = produceSquares()
+              squares.consumeEach{println(it)}
+            println("Done!
+                    ")
+                    
+            }
+            //
+            fun CoroutineScope.produceNumbers() = produce<Int>{
+              var x = 1
+              while (true)send(x++)
+            
+            }
+            //
+            fun CoroutineScope.square(numbers: ReceiveChannel<Int>) : ReceiveChannel <Int>= produce{
+              for(x in numbers)send(x*x)
+     
+            }
+            //
+            fun main() = runBlocking{
+              val numbers = productNumbers()
+              val squares = square(numbers)
+              repeat(5)
+              {
+                println(squares.receive())
+              }
+              println("Done!")
+              coroutineContext.cancelChildren()
+            }
+
+            fun CoroutineScope.produceNumbers() = produce<Int>{
+              var x = 1
+              while (true) send(x++)
+              
+            }
+
+            fun CoroutineScope.square(numbers: ReceiveChannel<Int>): ReceiveChannel<Int> = produce{
+              for(x in numbers)send(x*x)
+            }
+            //
+            fun CoroutineScope.numbersFrom(start: Int) = produce<Int>{
+              var x = start
+              while(true)send(x++)
+            }
+            //
+            fun CoroutineScope.filter(numbers: ReceiveChannel<Int>, prime: Int) = produce<Int>{
+              for(x in numbers )if(x % prime != 0)send(x)
+            
+            }
+            //
+            fun main() = runBlocking{
+              var cur = numbersFrom(2)
+              repeat(10){
+                val prime = cur.receive()
+                println(prime)
+                cur = filter(cur.prime)
+              }coroutineContext.cancelChildren()
+              
+            }
+
+            fun CoroutineScope.numbersFrom(start: Int) = produce<Int>{
+              var x = start
+              while(true) send(x++)
+            }
+            fun CoroutineScope.filter(numbers: ReceiveChannel<Int>, prime: Int) = produce<Int>{
+              for(x in numbers)if(x %prime != 0)send(x)
+            }
+
+            //
+            fun CoroutineScope.launchProcessor(id: Int, channel: ReceiveChannel<Int>) = launch{
+              for(msg in channel){
+                println("Processor #$id receiver $msg")
+              }
+            }
+            //
+            fun main() = runBlocking<Unit>{
+              val producer = produceNumbers()
+              repeat(5){launchProcessor(it, producer)}
+            delay(950)
+            producer.cancel()
+            }
+            fun CoroutineScope.produceNumbers() = produce<Int>{
+              var x = 1
+              while(true){
+                send(x++)
+                delay(100)
+              }
+            }
+            fun CoroutineScope.launchProcessor(id: Int, channel: ReceiveChannel<Int>) = launch{
+              for(msg in channel){
+                println("Processor #$id receiver $msg")
+              }
+            }
+            //
+            suspend fun sendString(channel: SendChannel<String>, s:String, time: Long){
+              while(true){
+                delay(time)
+                channel.send(s)
+              }
+            }
+            //
+            fun main() = runBlocking{
+              val channel = Channel<String>()
+              launch{sendString(channel, "foo", 200L)}
+              launch{sendString(channel, "Bar!", 500L)}
+          repeat(6){
+            println(channel.receive())
+          }
+          coroutineContext.cancelChildren()
+              
+            }
+            suspend fun sendString(channel: SendChannel<String>, s: String, time: Long){
+              while(true){
+                delay(time)
+                channel.send(s)
+              }
+            }
+            //
+                    fun main() = runBlocking{
+                      val channel = Channel<Int>(4)
+                      val sender = launch{
+                        repeat(10){
+                          println("Sending $it")
+                          channel.send(it)
+                        }
+                      }
+                      delay(1000)
+                      sender.cancel()
+                    }
+                    //
+  data class Ball(var hits: Int)
+
+  fun main() = runBlocking{
+    val table = Channel<Ball>()
+    launch{player("ping",table)}
+    launch{player("pong",table)}
+    table.send(Ball(0))
+ delay(1000)
+ coroutineContext.cancelChildren()
+  }
+  suspend fun player(name: String, table: Channel<Ball>){
+    for(ball in table){
+      ball.hits++
+      println("$name $ball")
+      delay(300)
+      table.send(ball)
+    }
+  }
+  //
+  fun main() = runBlocking<Unit>{
+    val tickerChannel = ticker(delayMillis = 100, initialDelayMillis = 0)
+    var nextElement = withTimeoutOrNull(1){tickerChannel.receive()}
+println("Initial element is available immediately: $nextElement")
+
+nextElement = withTimeoutOrNull(50)tickerChannel.receive()}
+  println("Next element is not ready in 50 ms: $nextElement")
+
+    nextElement = withTimeoutOrNull(60)tickerChannel.receive()}
+    println("Next element is not ready in 100 ms: $nextElement")
+
+    println("Consumer pauses for 150ms")
+    delay(150)
+
+    nextElement = withTimeoutOrNull(1) {tickerChannel.receive()}
+    println("Next element is available immediately after large consumer delay: $ nextElement")
+    nextElement = withTimeoutOrNull(60) {tickerChannel.receive()}//
+    println("Next element is ready in 50ms after consumer pause in 150ms: $nextElement")
+    tickerChannel.cancel()
+                    }
+  @OptIn(DelicateCoroutinesApi::class)
+  fun main() = runBlocking{
+    val job = GlobalScope.launch{
+      println("Throwing exception from launch")
+      throw IndexOutOfBoundsException()
+    }
+    job.join()
+    println("Throwing exception from async")
+    throw ArithmeticException()
+  }
+  try{
+    deferred.await()
+    println("unreached")
+  }catch(e: ArithmeticException){
+    println("Caught ArithmeticeException")
+  }
+                    }
+                    //
+  @OptIn(DelicateCoroutinesApi::class)
+  fun main() = runBlocking {
+    val handler = CoroutineExceptionHandler{_, "exception ->
+      println("CoroutineExceptionHandler got $exception"}
+      
+  }
+  val job = GlobalScope.launch(handler){
+    throw AssertionError()
+  }
+  val deferred = GlobalScope.async(handle){
+    throw ArithmeticException()
+  }
+  joinAll(job, deferred)
+              }
+  //
+  fun main() = runBlocking{
+    val job = launch{
+      val child = launch{
+        val child = launch{
+          try{
+            delay(Long.MAX_VALUE)
+          }finally{
+            println("Child is cancelled")
+          }
+        }
+        yield()
+        println("Cancelling child")
+     child.cancel()
+     child.join()
+     yield()
+     println("Parent is not cancelled")
+        
+      }
+      job.join()
+    }
+  }
+      //
+      @OptIn(DelicateCoroutinesApi::class)
+      fun main() = runBlocking{
+        val handler = CoroutineExceptionHandler { _, "exception -> 
+          println("CoroutineExceptionHandler got $exception")
+        
+        }
+        val job = GlobalScope.launch(handler){
+          launch{
+            try{
+              delay(Long.MAX_VALUE)
+              
+            }finally{
+              withContext(NonCancellable){
+                println("Children are cancelled, but exception is not handled until
+                        all children terminate")
+                        delay(100)
+                        println("The first child finished its non cancellable block")
+              }
+            }
+          }
+          launch{
+            delay(10)
+            println("Second child throws an exception")
+            throw ArithmeticException()
+          }
+        }
+        job.join()
+      }
+      //
+      @OptIn(DelicateCoroutinesApi::class)
+      fun main() = runBlocking{
+        val handler = CoroutineExceptionHandler {_, exception ->
+        println("CoroutineExceptionHandler got $exception with suppressed ${exception.suppressed.contentToStrign()}")
+        
+        }
+        val job = GlobalScope.launch(handler){
+          launch{
+            try{
+          
+            delay(Long.MAX_VALUE)
+
+            }finally{
+              throw ArithmeticException()
+          }
+        }
+          launch{
+            delay(100)
+            throw IOException()
+          }
+        (delay(Long.MAX_VALUE)
+
+
+      }
+
+      job.join()
+         }
+         //
+    @OptIn(DelicateCoroutinesApi::class)
+    fun main() = runBlocking
+         {
+           val handler = CoroutineExceptionHandler {_, exception -> 
+           println("CoroutineExceptionHandler got $exception")
+           }
+           val job = GlobalScope.launch(handler){
+             val inner = launch{
+               launch{
+                 launch{
+                   throw IOException()
+                 }
+               }
+             }
+             try{
+               inner.join()
+             }catch(e: CancellationException){
+               println("Rethrowing CancellationException with original cause")
+               throw e
+             }
+           }
+           job.join()
+         }
+         //
+         fun main() = runBlocking{
+           val supervisor = SupervisorJob()
+           with(CoroutineScope(coroutineContext + supervisor)){
+
+             val firstChild = launch(CoroutineExceptionHandler{_, _ -> }){
+               println("The first child is Failing")
+               throw AssertionError("the first child is cancelled")
+             }
+             val secondChild = launch{
+               firstChild.join()
+               println("The first child is cancelled : ${firstChild.isCancelled}, but the second one is still active")
+
+               try{
+                 delay(Long.MAX_VALUE)
+                 
+               }finally{
+                 println("The second child is cancelled because the supervisor waws cancelled")
+               }
+             }
+             firstChild.join()
+             println("Cancelling the supervisor")
+             supervisor.cancel()
+             secondChild.join()
+           }
+         }
+         //
+         fun main() = runBlocking{
+           try{
+             supervisorScope{
+               val child = launch{
+                 try{
+                   println("The child is sleeping")
+                   delay(Long.MAX_VALUE)
+                 }finally{
+                   println("The child is cancelled")
+                 }
+               }
+               yield()
+               println("Throwing an exception from the scope")
+               throw AssertionError()
+             }
+             
+           }catch(e: AssertionError){
+             println("Caught an assertion error")
+           }
+         }
+         //
+         fun main() = runBlocking{
+           val handler = CoroutineExceptionHandler {_, exception ->
+           println("CoroutineExceptionHandler got $exception")}
+         }
+         supervisorScope{
+           val child = launch(handler){
+             println("The child throws an exception")
+             throw AssertionError()
+           }
+           println("The scope is completing")
+         }
+         println("The scope is completed")
+         }
+         //
+         suspend fun massiveRun(action:suspend() -> Unit){
+           val n = 100
+           val k = 1000
+           val time = measureTimeMillis{
+             coroutineScope{
+             repeat(n)
+             launch{
+               repeat(k){action()}
+             }
+             }
+           }
+         }
+         println("Completed ${n*k} actions in $time ms")
+         }
+         //
+         suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+          var counter = 0
+
+         fun main() = runBlocking{
+           withContext(Dispatchers.Default){
+             massiveRun{
+               counter++
+             }
+           }
+           println("Counter = $counter")
+         }
+         //
+         suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+          @Volatile
+          var counter = 0
+         fun main() = runBlocking{
+           withContext(Dispatchers.Default){
+           massiveRun{
+             counter++
+           }  
+           }
+           println("Counter =  $counter")
+         }
+         //
+         suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+          val counter = AtomicInteger()
+
+          fun main() = runBlocking {
+            withContext(Dispatchers.Default){
+              massiveRun{
+                counter.incrementAndGet()
+              }
+            }
+            println("Counter = $counter")
+          }
+          //
+
+
+
+
+
+          
+          suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+
+          val counterContext = newSingleThreadContext("CounterContext")
+          val counter = 0
+         
+          fun main() = runBlocking {
+            withContext(Dispatchers.Default){
+              massiveRun{
+               withContext(counterContext){
+                 counter++
+               }
+              }
+            }
+            println("Counter = $counter")
+          }
+          //
+          suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+
+          val counterContext = newSingleThreadContext("CounterContext")
+          val counter = 0
+
+          fun main() = runBlocking {
+
+            
+               withContext(counterContext){
+                 massiveRun{
+                   
+                 
+                 counter++
+               }
+              }
+            
+            println("Counter = $counter")
+          }
+          //
+
+
+          
+          suspend fun massiveRun(action:suspend() -> Unit){
+            val n = 100
+            val k = 1000
+            val time = measureTimeMillis{
+              coroutineScope{
+              repeat(n)
+              launch{
+                repeat(k){action()}
+              }
+              }
+            }
+          }
+          println("Completed ${n*k} actions in $time ms")
+          }
+
+          val mutex  = Mutex()
+          val counter = 0
+
+          fun main() = runBlocking {
+            withContext(Dispatchers.Default){
+              massiveRun{
+                
+              mutex.withLock{
+                 counter++
+               }
+              }
+            }
+            println("Counter = $counter")
+          }
+          //
+          fun CoroutineScope.fizz() = produce<String>{
+            while(true){
+              delay(500)
+              send("Fizz")
+            }
+          }
+          //
+          fun CoroutineScope.fizz() = produce<String>{
+            while(true){
+              delay(1000)
+              send("Buzz!")
+            }
+          }
+          //
+          suspend fun selectFizzBuzz(fizz: ReceiveChannel<String>, buzz: ReceiveChannel<String>){
+            select<Unit>{
+              fizz.onReceive{value -> 
+         println("fizz -> '$value'")
+                }
+              buzz.onReceive{value -> 
+              println("buzz -. '$value'")}
+              }
+            }
+          }
+          //
+          ////
+          fun CoroutineScope.fizz() = produce<String>{
+            while(true){
+              delay(500)
+              send("Fizz")
+            }
+          }
+        
+          fun CoroutineScope.fizz() = produce<String>{
+            while(true){
+              delay(1000)
+              send("Buzz!")
+            }
+          }
+
+          suspend fun selectFizzBuzz(fizz: ReceiveChannel<String>, buzz: ReceiveChannel<String>){
+            select<Unit>{
+              fizz.onReceive{value -> 
+          println("fizz -> '$value'")
+                }
+              buzz.onReceive{value -> 
+              println("buzz -. '$value'")}
+              }
+            }
+          }
+
+          fun main() = runBlocking<Unit>{
+            val fizz = fizz()
+            val buzz = buzz()
+            repeat(7){
+              selectFizzBuzz(fizz,buzz)
+            }
+            coroutineContext.cancelChildren()
+          }
+          //
+          suspend fun selectAorB(a: ReceiveChannel<String>, b: ReceiveChannel<String>): String = select<String>{
+            a.onReceiveCatching{it -> 
+            val value = it.getOrNull()
+            if(value !=null){
+              "a -> $value'"
+            }else{
+              "Channel 'a' is closed"
+            }
+            }
+            b.onReceiveCatching{it ->
+            val value = it.getOrNull()
+            if(value !=null){
+              "b -> '$value'"
+              
+            }else{
+              "Channel 'b' is closed"
+            }
+            }
+          }
+          //
+          suspend fun selectAorB(a: ReceiveChannel<String>, b: ReceiveChannel<String>): String = select<String>{
+            a.onReceiveCatching{it -> 
+            val value = it.getOrNull()
+            if(value !=null){
+              "a -> $value'"
+            }else{
+              "Channel 'a' is closed"
+            }
+            }
+            b.onReceiveCatching{it ->
+            val value = it.getOrNull()
+            if(value !=null){
+              "b -> '$value'"
+
+            }else{
+              "Channel 'b' is closed"
+            }
+            }
+          }
+
+          fun main() = runBlocking<Unit>{
+            val a = produce<String>{
+              repeat(4){send("world $it")}
+            }
+            repeat(8){
+              println(selectAorB(a,b))
+            }
+            coroutineContext.cancelChildren()
+          }
+          //
+  fun CoroutineScope.produceNumbers(side:SendChannel<Int>) = produce<int>{
+    for(num in 1..10){
+      delay(100)
+      select<Unit>
+      onSend(num)
+      side.onSend(num)
+    }
+  }        
+         }
+         //
+         fun CoroutineScope.produceNumbers(side:SendChannel<Int>) = produce<int>{
+           for(num in 1..10){
+             delay(100)
+             select<Unit>
+             onSend(num)
+             side.onSend(num)
+           }
+         }  
+         }
+
+         fun main() = runBlocking<Unit>{
+           val side = Channel<Int>()
+           launch{
+             side.consumeEach{println("Side channel has $it")}
+           }
+           produceNumbers(side).consumeEach{
+             println("Consuming $it")
+           delay(250)
+           }
+           println("Done consuming")
+           coroutineXContext.cancelChildren()
+         }
+         //
+         fun CoroutineScope.asyncString(time: Int) = async{
+           delay(time.toLong())
+           "Waited for $time ms"
+         }
+         //
+         fun CoroutineScope.asyncStringList(): List<Deferred<String>>{
+           val random = Random(3)
+           return List(12) {asyncString(random.nextInt(1000))}
+         }
+         ///
+         fun CoroutineScope.asyncString(time: Int) = async{
+           delay(time.toLong())
+           "Waited for $time ms"
+         }
+
+         fun CoroutineScope.asyncStringList():List<Deferred<String>>
+            {
+              val random = Random(3)
+            return List(12) {asyncString(random.nextInt(1000))}
+            }
+            fun main() = runBlocking<Unit>{
+              val list = asyncStringList()
+              val result = select<Stirng>{
+                list.withIndex().forEach{(index, deferred) ->
+                deferred.onAwait{answer -> 
+                "Deferred $index produced answer '$answer'"}}
+              }
+            }
+         }
+         println(result)
+         val countActive = list.count{it.isActive}
+         println("$countActive coroutine are still active")
+         }
+         fun CoroutineScope.switchMapDeferreds(input : ReceiveChannel<Deferred<String>>) = produce<String>{
+           var current = input.receive()
+           while(isActive){
+             val next = select<Deferred<String>?>{
+               input.onReceiveCatching{update ->
+               update.getOrNull()}
+             }
+             current.onAwait{value -> 
+             send(value)
+             
+             input.receiveCatching().getORNull()}
+           }
+         }
+         if(next == null)
+         println("Channel was closed")
+         break
+         }else{
+           current = next
+         }
+         }
+
+         }
+         }
+         970P절반
