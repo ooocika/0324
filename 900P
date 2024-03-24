@@ -1,0 +1,1208 @@
+fun main() {
+//sampleStart
+val numbers = mutableListOf(1, 2, 3, 4)
+numbers.add(5)
+println(numbers)
+//sampleEnd
+}''
+
+
+
+//
+
+val numbers = mutableListOf(1, 2, 3, 4)
+
+numbers.addAll(arrayOf(7,8))
+println(numbers)
+numbers.addAll(2,setOf(3,4))
+println(numbers)
+}
+//
+fun main(){
+  val numbers = mutableListOf("one","two")
+  numbers += "three"
+  println(numbers)
+  numbers += listOf("four","five")
+  println(numbers)
+}
+//
+fun main(){
+  val numbers = mutableListOf(1,2,3,4,3)
+  numbers.remove(3)
+  println(numbers)
+  numbers.remove(5)
+  println(numbers)
+}
+//
+fun main(){
+  val numbers = mutableListOf(1,2,3,4)
+  println(numbers)
+  numbers.retainAll{it >= 3}
+  println(numbers)
+  numbers.clear()
+  println(numbers)
+
+  val numbersSet = mutableSetOf("one","two","three","four")
+  numbersSet.removeAll(setOf("one","two"))
+  println(numbersSet)
+}
+//
+fun main(){
+  val numbersSet = mutableSetOf("one","two","three","four")
+  number -="three"
+  println(numbers)
+  numbers -= listOf("four","five")
+  println(numbers)
+  
+}
+//
+fun main(){
+  val numbers = listOf(1,2,3,4)
+  println(numbers.get(0))
+  println(numbers[0])
+  println(numbers.getOrNull(5))
+  println(numbers.getOrElse(5, {it}))
+}
+//
+fun main(){
+  val numbers = (0..13).toList()
+  println(numbers.subList(3,6))
+}
+//
+fun main(){
+  val numbers = listOf(1,2,3,4,2,5)
+  println(numbers.indexOf(2))
+  println(numbers.lastIndexOf(2))
+}
+//
+fun main(){
+  val numbers = mutableListOf(1,2,3,4)
+  println(numbers.indexOfFirst{it>2})
+println(numbers.indexOfLasr{it % 2 ==1})
+}
+//
+fun main(){
+  
+  val numbersSet = mutableSetOf("one","two","three","four")
+  numbers.sort()
+  println(numbers)
+  println(numbers.binarySeatch("two"))
+  println(numbers.binarySearch("z"))
+  println(numbers.binareySearch("two", 0,2))
+}
+//
+data class Product(val name: String, val price: Double)
+fun main(){
+  val productList = listOf(
+    Product("WebStorm", 49.0),
+    Product("AddCode", 99.0),
+    Product("DotTrace",129.0),
+    Product("ReSharper", 149.0))
+
+  println(productList.binareySearch(Product("AppCode", 99.0), compareBy<Product>{it.price}.thenBy{it.name}))
+  }
+//
+fun main(){
+  val colors = listOf("Blue","green","ORANGE","Red","yellow")  
+  println(colors.binarySearch("RED", String.CAST_INSENSTIVE_ORDER))
+
+}
+//
+data class Product(val name: String, val price:Double)
+
+fun priceComparison(product: Product, price: Double) = sign(product.price - price).toInt()
+
+fun main(){val productList =listOf(
+  val productList = listOf(
+    Product("WebStorm", 49.0)
+    Product("AppCode", 99.0)
+    Product("DotTrace", 129.0)
+    Product("ReSharper", 149.0))
+
+  println(productList.binarySearch{priceComparison(it, 99.0)})
+  }
+  
+//
+fun main(){
+  val numbers = mutableListOf("one","five","six")
+  numbers.add(1,"two")
+  numbers.addAll(2,listOf("three","four"))
+println(numbers)
+}
+//
+fun main(){
+  val numbers = mutableListOf("one","five","three")
+  numbers[1] = "two"
+println(numbers)
+}
+//
+
+fun main(){
+  val numbers = mutableListOf(1,2,3,4)
+  numbers.fill(3)
+  println(numbers)
+}
+//
+fun main(){
+  val numbers = mutableListOf(1,2,3,4,3)
+  numbers.removeAt(1)
+  println(numbers)
+  
+}
+//
+fun main(){
+  val numbers = mutableListOf("one","two","three","four")
+
+  numbers.sort()
+  println("Sort into ascending: $numbers")
+  numbers.sortDescending()
+  println("Sort into descending: $numbers")
+
+
+  numbers.sortBy{it.length}
+  println("Sort into ascending by length: $numbers")
+  numbers.sortByDescending{it.last()}
+  println("Sort into descending by the last letter: $numbers")
+
+  numbers.sortWith(compareBy<String>{it.length}.thenBy{it})
+  println("Sort by COmparator: $numbers")
+
+  numbers.shuffle()
+  println("Shuffle:$numbers ")
+
+  numbers.reverse()
+  println("Reverse: $numbers")
+  
+
+}
+//
+fun main(){
+  val numbers = setOf("one","two","three")
+
+println(numbers union setOf("four","five"))
+println(setOf("four","five")union numbers)
+}
+//
+fun main(){
+  val numbers = setOf("one","two","three")
+
+  println(numbers intersect setOf("two","one"))
+
+  println(numbers subtract setOf("three","four"))
+  
+  println(numbers subtract setOf("four","three"))
+  
+}
+//
+fun main(){
+  val numbers = setOf("one", "two","three")
+  val numbers2 = setOf("three","four")
+
+  println(numbers - numbers2)union (numbers2 - numbers)
+}
+//
+fun main(){
+  val list1 = listOf(1,1,2,3,5,8,-1)
+  val list2 = listOf(1,1,2,2,3, 5)
+
+  print(list1 intersect list2)
+
+  println(list1 union list2)
+  
+}
+//
+fun main(){
+  val numbersMap = mapOf("one"to 1, "two"to 2, "three" to 3)
+  println(numbersMap.get("one"))
+  println(numbersMap["one"])
+  println(numberMap.getOrDefault("four",10))
+  println(numberMap["five"])
+}
+//
+fun main(){
+  val numbersMap = mapOf("one"to 1, "two"to 2, "three" to 3)
+  println(numbersMap.keys)
+  println(numbersMap.values)
+}
+
+//
+fun main(){
+  val numbersMap = mapOf("key1"to 1, "key2" to 2, "key3" to 3, "key11"to 11)
+  val filteredMap = numbersMap.filter{(key,value) -> key.endsWith("1")&& value > 10}
+  println(filteredMap)
+}
+//
+fun main(){
+  val numbersMap = mapOf("key1"to 1, "key2" to 2, "key3" to 3, "key11"to 11)
+  val filteredKeysMap = numbersMap.filterKeys{it.endsWith("1")}
+  val filteredValuesMap = numbersMap.filterValues{it <10}
+
+  println(filteredKeysMap)
+  println(filteredValuesMap)
+}
+//
+fun main(){
+  val numbersMap = mapOf("one"to 1, "two"to 2, "three" to 3)
+  println(numbersMap + Pair("four", 4))
+  println(numbersMap + Pair("one", 10))
+  println(numbersMap + mapOf("five" to 5 ,"one"to 11))
+}
+//
+
+  fun main(){
+    val numbersMap = mapOf("one"to 1, "two"to 2, "three" to 3)
+    println(numbersMap - "one")
+    println(numbersMap - listOf("two", "four"))
+
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2)
+    numbersMap.put("three",3)
+    println(numbersMap)
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2, "three" to 3)
+    numbersMap.putAll(setOf("four" to 4, "five" to 5))
+  println(numbersMap)
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2)
+    val previousValue = numbersMap.put("one", 11)
+    println("value associated with 'one', before: $previousValue, after: ${numbersMap["one"]}")
+    println(numbersMap)
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2)
+    numbersMap["three"] = 3
+    numbersMap += mapOf("four"to 4 , "five"to 5)
+    println(numbersMap)
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2,"three"to 3)
+    numbersMap.remove("one")
+    println(numbersMap)
+  numbersMap.remove("three", 4)
+    println(numbersMap)
+    
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2,"three"to 3, "threeAgain"to 3)
+    numbersMap.keys.remove("one")
+    println(numbersMap)
+    
+    numbersMap.values.remove(3)
+    println(numbersMap)
+    
+  }
+  //
+  fun main(){
+    val numbersMap = mutableMapOf("one"to 1, "two"to 2,"three"to 3)
+    numbersMap -="two"
+    println(numbersMap)
+
+   numbersMap -="five"
+    println(numbersMap)
+
+  }
+  //
+  @RequiresOptIn(message  = "This API is experimental . It may be changed in future without notice.")
+  @Retention(AnnotationRetention.BINARY)
+  @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+  annotion class MyDateTime
+
+  @MyDateTime
+  class DateProvider
+  //
+  fun getYear(): Int{
+    val dateProvider: DateProvider
+  }
+
+  @MyDateTime
+  fun getDate(): Date{
+    val dateProvider: DateProvider
+  }
+
+  fun displayDate(){
+    println(getDate())
+  }
+  //
+  fun getDate(dateProvider: DateProvider): Date{
+    
+  }
+
+  fun displayDate(){
+    println(getDate())
+  }
+  //
+  @RequiresOptIn(message = "This API is experimental. It may be changed in the future without notice.")
+  @Retention(AnnotationTarget.CLASS,AnnotationTarget.FUNCTION)
+  annotation class MyDateTime
+
+  @NyDateTime
+  class DateProvider
+
+  @OptIn(MyDateTime::class)
+  fun getDate():Date{
+    val dateProvider: DateProvider
+  }
+  fun displayDate(){
+    println(getDate())
+  }
+  //
+  @OptIn(MyDateTime::class)
+  fun getDate(dateProvider: DateProvider): Date{
+    
+  }
+  fun displayDate(){
+    println(getDate())
+  }
+  //
+  @file:OptIn(MyDateTime::class)
+  //
+  tasks.named<KotlinComilationTask<*>>("compileKotlin").configure{
+    compilerOptions.freeCompilerArgs.add("-opt-in=org.mylibrary.OptInAnnotation")
+  }
+  //
+  sourceSets{
+    all{
+      languageSettings.optIn("org.mylibrary.OptInAnnotation")
+    }
+  }
+  //
+  @RequiresOptIn
+  @Retention(AnnotationRetention.BINARY)
+  @Target(AnnotationTarget.Class, AnnotationTarget.FUNCTION)
+  annotation class MyDateTime
+  //
+  @RequiresOptIn(level = RequiresOptIn.Level.WARNING, message = "This API is experimental. It can be incompatibly changed
+                 future")
+                 @Retention(AnnotationRetention.BINARY)
+                 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+                 annotation class ExperimentalDateTime
+                 //
+                 @MyDateTime
+                 class DateProvider
+
+                 @MyDateTime
+                 fun getTime(): Time{}
+                 //
+                 Reprecated("This opt-in requirement is not used anymore. Remove its usages from your code")
+                 @RequiresOptIn
+                 annotation class ExperimentalDateTime
+                 //
+                 data class Person(var name: String, var age: Int, var city: String){
+                   fun moveTo(newCity: String){city = newCity}
+                   fun incrementAge(){age++}
+                   
+                 }
+                 fun main(){
+                   Person("Alice", 20, "Amsterdam").let{
+                     println(it)
+                     println("London")
+                     it.incrementAge()
+                     println(it)
+                   }
+                 }
+                 //
+                 data class Person(var name: String, var age:Int, var coty: String){
+                   fun moveTo(newCity: String){city =newCity}
+                   fun incrementAge(){age++}
+                 }
+                 fun main(){
+                   val alice = Person("Alice", 20, "Amsterdam")
+                   println(alice)
+                   alice.moveTo("London")
+                   alice.incrementAge()
+                   println(alice)
+                 }
+                 //
+                 fun main(){
+                   val str ="Hello"
+                   str.run{
+                     println("The string's length: $length")
+                   }
+                   str.let{
+                     println("The string's length is ${it.length}")
+                   }
+                 }
+                 //
+                 data class Person(var name: String, var age: Int = 0, var city: String ="")
+
+                 fun main(){
+                   val adam = Person("Adam").apply{
+                     age = 20
+                     city = "London"
+                   }
+                   println(adam)
+                 }
+                 //
+                 fun writeToLog(message: String){
+                   println("INFO: $message")
+
+                   
+                 }
+                 fun main(){
+                   fun getRandomInt(): Int{
+                     return Random.nextInt(100).also{
+                       writeToLog("getRandomInt() generated value $it")
+                     }
+                   }
+
+                   val i = getRandomInt()
+                   println(i)
+                 }
+                 //
+                 fun writeToLog(message: string){
+                   println("INFO: $message")
+                   
+                 }
+                 fun main(){
+                 return Random.nextInt(100).also{value ->
+                 writeToLog("getRandomInt() generated value $value")}  
+                 }
+
+                 val i = getRandomInt()
+                 println(i)
+
+                 }
+                 //
+                 fun main(){
+                   val numberList = mutableListOf<Double>()
+                   numberList.also{println("Populating the list")}
+                 .apply{
+                   add(2.71)
+                   add(3.14)
+                   add(1.0)
+                 }
+                 .also{println("Sorting the list")}
+                 .sort()
+
+                 println(numberList)
+                 }
+                 //
+                 fun writeToLog(message: String){
+                   println("INFO: $message")
+                 }
+
+                 fun main(){
+                   fun getRandomInt(): Int{
+                     return Random.nextInt(100).also{
+                       writeToLog("getRandomInt() generated value $it")
+                     }
+                   }
+                   val i = getRandomInt()
+                 }
+                 //
+                 fun main() {
+                
+                 val numbers = mutableListOf("one", "two", "three")
+
+              val countEndsWithE = numbers.run{
+                add("four")
+                add("five")
+                count{it.endsWith("e")}
+              
+              }
+
+              println("There are $countEndsWithE elements that end with e.")
+                 }
+                 //
+                 fun main() {
+                 val numbers = mutableListOf("one", "two", "three")
+                 with(numbers){
+                   val firstItem = first()
+                   val lastItem = last()
+                   println("First item: $firstItem, last item: $lastItem")
+                 }
+                 }
+                 //
+
+                 fun main() {
+                 val numbers = mutableListOf("one", "two", "three","four","five")
+                 val resultList = numbers.map{it.length}.filter{it > 3}
+                 println(resultList)
+                 }
+                 //
+                 fun main() {
+                    val numbers = mutableListOf("one", "two", "three","four","five")
+                    numbers.map{it.length}.filter{it > 3}.let{
+                      println(it)
+                    }
+                    
+                    }
+                 /
+    //
+      fun main() {
+         val numbers = mutableListOf("one", "two", "three","four","five")
+         numbers.map {it.length}.filter{it > 3}.let(::println)
+      }
+      //
+      fun processNonNullString(str: String){}
+      fun main(){
+        val str: String?  = "Hello"
+        val length = str?.let{
+          println("let() called on $it")
+          processNonNullString(it)
+        it.length
+        }
+      }
+      //
+      fun main() {
+         val numbers = mutableListOf("one", "two", "three","four")
+         val modifiedFirstItem = numbers.first().let{firstItem -> 
+         println("The first item of the list is '$firstItem'")
+         if(firstItem.length >= 5)firstItrem else "!" + firstItem + "!"
+         }.uppercase()
+         println("First item after modifications: '$modifiedFirstItem'")
+        }
+      //
+      fun main() {
+         val numbers = mutableListOf("one", "two", "three")
+         with(numbers){
+           println("'with' is called with argument $this")
+           println("It contains $size elements")
+         }
+      }
+      //
+      fun main() {
+         val numbers = mutableListOf("one", "two", "three")
+         val firstAndLast = with(numbers){
+           "The first element is $ {first()}," + 
+           "the last element is ${last()}"
+         }
+         println(firstAndLast)
+      }
+      //
+      class MultuportService(var url: String, var port: Int){
+        fun prepareRequest (): String ="Default request"
+        fun query(request:String): String = "Result for query ' request'"
+      
+      }
+
+      fun main(){
+        val service = MultiportService("http://",80)
+
+        val result = service.run{
+          port = 8080
+          query(prepareRequest()+ "to port $port")
+        }
+
+        val letResult = service.let{
+          it.port = 8080
+          it.query(it.prepareRequest() + "to port ${it.port}")
+        }
+        println(result)
+
+      println(letResult)
+      }
+      //
+      fun main(){
+        val hexNumberRegex = run{
+          val digits = "0-9"
+          val hexDigits = "A-Fa-f"
+          val sign = "+-"
+
+          Regex("[$sign]?[$difits$hexDigits]+")
+        }
+        for(match in hexNumberRegex.findAll("+123 -FFFF !%*& 88 XYZ"))
+      println(match.value)
+      }
+      //
+      data class Person(var name: String, var age: Int = 0, var city: String = "")
+
+      fun main(){
+        val adam = Person("Adam").apply{
+          age = 32
+          city = "London"
+        }
+        println(adam)
+      }
+      //
+      fun main() {
+         val numbers = mutableListOf("one", "two", "three")
+         numbers
+        .alse{println("The list elements before adding new one: $it")}
+        .add("four")
+        //
+        fun main(){
+        val number = Random.nextInt(100)
+
+        val evenOrNull = number.takeIf{it % 2 == 0}
+        val oddOrNull = number.takeUnless{it%2 ==0}
+        println("even: $evenOrNull, odd: $oddOrNull")
+        }
+        //
+        fun main(){
+          val str = "Hello"
+          val caps = str.takeIf{it.isNotEmpty()}?.uppercase()
+
+          println(caps)
+        }
+        //
+        fun main(){
+
+          fun displaySubstringPosition(input: String, sub:String){
+          input.indexOf(sub).takeIf{it >= 0}?.let{
+            println("The substring $sub" is found in $input")
+                    println("Its start position is $it.")
+          }  
+          }
+
+          displaySubstringPosition("010000011","11")
+          displaySubstringPosition("010000011","12")
+        }
+        //
+        fun main(){
+          fun displaySubstringPosition(input: String, sub: String){
+            val index = input.indexOf(sub)
+            if(index >= 0){
+              println("The substring $sub is found in $input")
+              println("Its start position is $index")
+            }
+          }
+          displaySubstringPosition("010000011","11")
+            displaySubstringPosition("010000011","12")
+          
+        }
+        //
+        import kotlin.time.*
+        import kotlin.time.Duration.Companion.nanoseconds
+        import kotlin.time.Duration.Companion.milliseconds
+        import kotlin.time.Duration.Companion.seconds
+        import kotlin.time.Duration.Companion.minutes
+        import kotlin.time.Duration.Companion.days
+
+fun main(){
+val fiveHundredMillseconds : Duration =500.milliseconds
+  val zeroSeconds : Duration = 0.seconds
+  val tenMinutes: Duration = 10.minutes
+  val negativeNanosecond: Duration = (-1).nanoseconds
+  val infiniteDays : Duration = Double.POSITIVE_INFINITY.days
+  val negativeInfiniteDays: Duration = Double .NEGATIVE_INFINITY.days
+
+println(fiveHundredMilliseconds)
+println(zeroSeconds)
+println(tenMinutes)
+println(negativeNanosecond)
+println(infiniteDay)
+println(negativeInfiniteDays)
+}
+//
+fun main(){
+  val fiveSeconds: Duration = 5.seconds
+  val thirtySeconds: Duration = 30.seconds
+
+  println(fiveSeconds + thirtySeconds)
+
+  println(thirtySeconds - fiveSeconds)
+
+  println(fiveSeconds * 2)
+
+  println(thirtySeconds / 2)
+
+  println(thirtySeconds/ fiveSeconds)
+
+  println(-thirtySeconds)
+
+  println((-thirtySeconds).absoluteValue)
+}
+//
+fun main(){
+  println(5887.milliseconds.toString(DurationUnit.SECOND, 2))
+}
+//
+fun main(){
+  println(86420.seconds.toIsoString())
+}
+//
+fun main(){
+   val thirtyMinutes: Duration = 30.minutes
+  println(thirtyMinutes.inWholeSeconds)
+  
+}
+//
+fun main(){
+println(270.seconds.toDouble(DurationUnit.MINUTES))  
+}
+//
+fun main(){
+  val thirtyMinutes: Duration = 30.minutes
+  val halfHour: Duration = 0.5.hours
+  println(thirtyMinutes == halfHour)
+}
+//
+fun main(){
+  println(3000.microseconds< 25000.nanoseconds)
+}
+//
+fun main(){
+  val thirtyMinutes: Duration = 30.minutes
+  println(thirtyMinutes.toComponents{hours, minutes,_,_ -. "${hours}h: ${minutes}m"})
+}
+//
+fun main(){
+  val timeTaken = measureTime{
+    Thread.sleep(100)
+  }
+  println(timeTaken)
+}
+//
+fun main(){
+  val (value,timeTaken) = measureTimedValue{
+    Thread,sleep(100)
+    42
+  }
+  println(value)
+  println(timeTaken)
+}
+//
+fun main(){
+  val timeSource = TimeSource.Monotonic
+  val mark = timeSource.markNow()
+}
+//
+fun main(){
+  val timeSource = TimeSource.Monotonic
+  val mark1 = timeSource.markNow()
+  Thread.sleep(500)
+  val mark2 = timeSource.markNow()
+
+  repeat(4){n ->
+  val mark3 = timeSource.markNow()
+  val elapsed1 = mark3 - mark1
+  val elapsed2 = mark3 - mark2
+
+    println("Measurement 1.${n+1}: elapsed1 = $elapsed1, elapsed2=$elapsed2, diff=${elapsed1 - elapsed2}")
+  }
+  println(mark2 > mark1)
+  }
+//
+fun main(){
+    val timeSource = TimeSource.Monotonic
+  val mark1 = timeSource.markNow()
+  val fiveSeconds : Duration = 5.seconds
+  val mark2 = mark1 + fiveSeconds
+
+  println(mark2.hasPassedNow())
+
+  Thread.sleep(6000)
+  println(mark2.hasPassedNow())
+}
+//
+object RealtimeMonotonicTimeSource :AbstractLongTimeSource(DurationUnit.NANOSECONDS){
+  override fun read(): Long = SystemClock.elapsedRealtimeNanos()
+}
+//
+fun main(){
+  val elapsed; Duration = RealtimeMonotonicTimeSource.measureTime{
+    Thread.sleep(100)
+  }
+  println(elapsed)
+}
+//
+fun main() = runBlocking{
+  launch{
+    delay(1000L)
+    println("World!")
+    
+  }
+  println("Hello")
+}
+//
+fun main()= runBlocking{
+  launch{doWorld()}
+  println("Hello")
+}
+
+suspend fun doWorld(){
+delay(1000L)
+println("world!")
+}
+//
+fun main()= runBlocking{
+  doWorld()
+}
+
+suspend fun doWorld() = coroutineScope{
+launch{
+  delay(1000L)
+println("world!")
+}
+println("hello")
+}
+//
+fun main()= runBlocking{
+  doWorld()
+  println("Done")
+}
+
+suspend fun doWorld() = coroutineScope{
+launch{
+  delay(2000L)
+println("world 2")
+}
+launch{
+  delay(1000:)
+  println("world 1")
+}
+
+println("hello")
+}
+//
+fun main()= runBlocking{
+val job = launch{
+  delay(1000L)
+println("world!")
+}
+println("hello")
+job.join()
+println("Done")
+}
+//
+fun main() = runBlocking{
+  repeat(50_000)
+  launch{
+    delay(5000L)
+    print(".")
+  }
+}
+//
+Blocking requests
+                    //
+  interface GithubService{
+    @GET("orgs/{org}/repos?per_page=100")
+  
+  fun getOrgReposCall(@Path("org")
+                      org:String):Call<List<Repo>>
+  
+  @GET("repos/{owner}/{repo/contributors?pers_page=100}")
+  fun getRepoContributorsCall{
+    @Path("owner")owner: String,
+    @Path("repo")repo:String
+  }:Call<List<User>>
+  }               
+  //
+  fun loadContributorBlocking(service:GitHubService, req:RequestDate): List<User>{
+    val repos = service
+    .getOrgReposCall(req.org)
+    .execute()
+    .alse{logRepos(req,it)}
+    .body()?: emptyList()
+
+    return repos.flatMap{repo -> 
+    service
+    .getRepoContributorsCall(req.org, repo.name)
+    .execute()
+    .alse{logUsers(repo, it)}
+    .bodyList()
+    
+    }.aggregate()
+  }
+  //
+  fun <T>Response<List<T>>.bodyList(): List<T>{
+    return body ( ) ?: emptyList()
+  }
+  //
+  when (getSelectedVariant()){
+    BLOCKING -> {
+      val users = loadContributorsBlocking(service, req)
+      updateResults(users, startTime)
+    }
+    
+  }
+  //
+  fun List<User>.aggregate(): List<User> = 
+                groupBy{it.login}
+                .map{(login, group)-> User(login, group.sumOf{it.contributions})}
+                .sortedByDescending{it.contributions}
+                //
+                thread{
+                  loadContributorsBlocking(service, req)
+                }
+                //
+                fun loadContributorsBackground(
+                  service: GitHubService, req: RequestData,
+                  updateResults:(List<User>)-> Unit
+                )
+                //
+                loadContributorsBackground(service, req){users -> 
+                SwingUtilities.invokeLater {
+                  updateResults(users, startTime)
+                }}
+                //
+                thread{
+                  updateResults(loadContributorsBlocking(service, req))
+                }
+                //
+                fun loadContributorsCallbacks9
+                    service: GitHubService, req: RequestData
+                , updateResults: (List<User>)-> Unit
+                    }{
+                      service.getOrgReposCall(req.org).onResponse{reponseRepos -> 
+                      logRepos(req, responseRepos)
+                      val repos = responseRepos.bodyList()
+
+                      val allUser = mutableListOf<User>()
+                      for(repo in repos){
+                        service.getRepoContributorscall(req.org.repo.name)
+                        .onResponse{responseUser -> 
+                        logUser(repo, responseUsers)
+                        val users = responseUser.bodyList()
+                        allUsers += users
+                        }
+                      }
+                      }
+
+                      updateResults(allUser.aggregate())
+                    }
+                    //
+                    val allUsers = mutableListOf<User>()
+                    for((index, repo) in repos.withIndex())
+                    service.getRepoContributorsCall(req.org, repo.name)
+                    onResponse{responseUsers -> 
+                    logUsers(repo, responseUser)
+                    val users = responseUsers.bodyList()
+                    allUser += users
+                      if(index == repos.lastIndex){
+                        updateResults(allUser.aggregate())
+                      }
+                    }
+                    
+                    }
+                    //
+  val allUsers = Collections.synchronizedList(mutableListOf<User>())
+  val numberOfProcessed =AtomicInteger()
+  for(repo on repos){
+    service.getrepoContributorsCall(req.org, repo.name)
+    .onResponse{reponseUsers ->
+    val users = responceUser.bodyList()
+    allUsers += users
+      if(numberOfProcessed.incrementAndGet() == repos.size){
+        updateResult(allUser.aggregate())
+      }
+    
+    }
+  }
+  //
+  val countDownLatch = CountDownLatch(repos.size)
+  for(repo in repos){
+    service.getRepoContributorsCall(req.org, repo.name)
+    .onResponse{responseUsers -> 
+    
+    countDownLatch.countDown()}
+  }
+
+  countDownLatch.await()
+  updateResults(allUser.aggregate())
+  //
+  interface GitHubService{
+    @GET("orgs/{orgs}/repos?per_page=100")
+  suspend fun getOrgRepos(
+    @Path("org")org: String
+    
+  ): List<Repo>
+  
+  }
+  //
+  interface GitHubService{
+    @GET("orgs/{orgs}/repos?per_page=100")
+    suspend fun getOrgRepos(
+      @Path("org")org:String
+      
+    ):Response<List<Repo>>
+
+    @GET("repos/{owner}/{repo}/contribute?per_page=100")
+    suspend fun getRepoContributors{
+      @Path("owner")owner: String,
+      @Path("repo")repo: String
+      ):Response<List<User>>
+    
+  }
+    //
+    suspend fun load ContributorsSuspend(service: GitHubService, req: RequestDate):
+    List<User>{
+      val repos = service
+      .getOrgRepos(req.org)
+      .also{logRepos(req.it)}
+      .bodyList()
+
+      return  repos.flatMap{repo-> 
+      service.getRepoContributors(req.org, repo.name)
+      .alse{logUsers(repo, it)}
+      .bodyList()
+      }.aggregate()
+    }
+    //
+    launch{
+      val users = loadContributorSuspend(req)
+      updateResuits(users, startTime)
+    }
+    //
+    fun main ( ) = runBlocking{
+      val deferred: Deferred<Int> = async{
+        loadData()
+      }
+      println("waiting..")
+      println(deferred.await())
+    }
+    suspend fun loadData(): Int{
+      println("loading..")
+    delay(1000L)
+    println("loaded!")
+    return 42
+    }
+    //
+    fun main() = runBlocking{
+      val deferreds:List<Deferred<Int>> = (1..3).map{
+        async{
+          delay(1000L*it)
+          println("Loading $it")
+        it
+        }
+      }
+      val sum  = deferreds.awaitAll().sum()
+      println("$sum")
+    }
+    suspend fun loadContributorsConcurrent(
+      service: GitHubService,
+      req: requestData
+      
+    ): List<User> = coroutineScope{
+      
+    }
+    //
+    val deferreds:List<Deferred<List<User>>> = repos.map{repo -> 
+    async{
+      
+    }}
+    deferreds.awaitAll()
+    //
+    suspend fun loadContributorsConcurrent(
+      service: GitHubService,
+      req: RequestData
+    ): List<User> = coroutineScope{
+      val repos = service
+      .getOrgRepos(req.org)
+      .also{logRepos(req,it)}
+      .bodyList()
+    
+    val deferreds: List<Deferred<List<User>>> = repos.map{repo -> 
+    async{
+      service.getRepoContributors(req.org, repo.name)
+      .also{logUser(repo,it)}
+      .bodyList()
+    }}
+    deferreds.awaitAll().flatten().aggregate()
+    
+    }
+    //
+    async(Dispatcher.Default){
+      log("starting loading for${repo.name}")
+      service.getRepoContributors(req.org, repo.name)
+      .also{logUser(repo, it)
+      }
+    .bodyList()
+    }
+    //
+    launch(Dispatchers.Main){
+      updateResults()
+    }
+    //
+    launch(Dispatchers.Default){
+      val users = loadContributorsConcurrent(service, req)
+      withContext(Dispatchers.Main){
+        updateResults(users, startTime )
+      }
+    }
+    //
+    fun main() = runBlocking{
+      launch{}
+      this.launch{}
+    }
+    //
+    suspend fun loadContributorsConcurrent{(
+    service: GitHubService,
+      req: RequestData
+    ): List<User> = coroutineScope{
+      async{
+        log("starting loading for${repo.name}")
+      delay(3000)
+      }
+    }
+
+    //
+    suspend fun loadContributorsConcurrent{(
+      service: GitHubService,
+        req: RequestData
+      ): List<User> {
+      GlobalScope.asnc{
+        log("starting loading for ${repo.name}")
+      }
+      return deferreds.awaitAll().flatten().aggregate()
+      }
+    //
+    interface Contributors{
+      fun loadContributors(){
+        when(getSelectedVariant()){
+          CONCURRENT -> {
+            launch{
+              val users = loadContributorsConcurrent(service, req)
+              updateResults(users, startTime)
+              
+            }.setUpCancellation()
+          }
+        }
+      }
+
+      private fun job.setUpCancellation(){
+        val loadingJob = this
+
+        val listener = ActionListener{
+          loadingJob.cancel()
+          updateLoadingStatus(CANCELED)
+          
+        }
+        addCancelListener(listener)
+      }
+    }
+    //
+    val job = launch{}
+
+    job.setUpCancellation()
+
+    //
+    launch (Dispatchers.Default){
+      val users = loadContributorsConcurrent(service.req)
+      
+    }
+    suspenc fun load ContributorsConcurrent(
+      service: GitHubService, req: RequestData
+      
+    ):List<User> = coroutineScope{
+      async{
+        }}
+    //
+    suspend fun loadContributorsProgess{
+      service: GitHubService,
+      req: RequestData,
+      updateResults:suspend(List<User>, completed: Boolean)-> Unit
+      
+    }{
+      
+    }
+    /
+      //
+      launch(Dispatchers.Default){
+      loadContributorsProgress(service, req){user, completed -> 
+      withContext(Dispatchers.Main)
+        {
+          updateResults(users, startTime, completed)
+        }}  
+      }
+      //900P
